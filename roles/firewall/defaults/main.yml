@@ -1,0 +1,29 @@
+---
+# defaults file for firewall
+
+ansible_host: "it.lad.fw.fw-test-01.vo"
+ansible_user: "ansit"
+ansible_httpapi_password: "0kn.KA8h-bLQb"
+ansible_httpapi_password: "0kn.KA8h-bLQb"
+ansible_httpapi_port: 80 #REPLACE WITH 443 CONNECTION IF POSSIBLE!
+ansible_httpapi_use_ssl: no
+ansible_httpapi_validate_certs: no
+
+user_list:
+- name: guest
+service_list:
+- name: HTTP
+- name: HTTPS
+dstaddr_list:
+- name: via-rs-vpn_bnp
+#- name: via-sv-jira
+dstintf_list:
+- name: port1
+- name: port8
+srcaddr_list:
+#- name: via-rs-prod
+- name: via-rs-vpn_bnp
+srcintf_list:
+- name: port1
+- name: port8
+

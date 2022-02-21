@@ -1,0 +1,4 @@
+- hosts: test_fortios
+  connection: httpapi
+  roles:
+    - firewall

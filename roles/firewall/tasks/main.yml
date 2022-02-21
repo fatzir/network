@@ -1,0 +1,19 @@
+---
+# tasks file for firewall
+  
+- name: configure policy
+  fortios_firewall_policy:
+    vdom: root
+    state: present
+    firewall_policy:
+      name: firewall_test8
+      action: accept
+      policyid: 0
+      schedule: "always"
+      srcintf: "{{ srcintf_list }}"
+      srcaddr: "{{ srcaddr_list }}"
+      users: "{{ user_list }}"
+      dstintf: "{{ dstintf_list }}"
+      dstaddr: "{{ dstaddr_list }}"
+      service: "{{ service_list }}"
+      logtraffic: all
