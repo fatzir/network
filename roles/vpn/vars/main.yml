@@ -1,2 +1,11 @@
 ---
-# vars file for vpn
+# defaults file for vpn
+
+ansible_host: "it.lad.fw.fw-test-01.vo"
+ansible_user: "ansit"
+ansible_httpapi_password: "{{ lookup('file', '/etc/motd') }}"
+ansible_httpapi_port: 80 #REPLACE WITH 443 CONNECTION IF POSSIBLE!
+ansible_httpapi_use_ssl: no
+ansible_httpapi_validate_certs: no
+
+

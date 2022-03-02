@@ -1,4 +1,8 @@
 - hosts: test_fortios
   connection: httpapi
+  vars_files:
+  - data-vpn-fgt.yaml
   roles:
-    - firewall
+    - role: firewall
+    - role: vpn
+    

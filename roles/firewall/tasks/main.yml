@@ -3,10 +3,10 @@
   
 - name: configure policy
   fortios_firewall_policy:
-    vdom: root
+    vdom: "{{ vdom }}"
     state: present
     firewall_policy:
-      name: firewall_test8
+      name: "{{ firewall_name }}"
       action: accept
       policyid: 0
       schedule: "always"

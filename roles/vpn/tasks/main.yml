@@ -1,2 +1,62 @@
----
-# tasks file for vpn
+- name: fact gathering
+  fortios_configuration_fact:
+          selectors:
+                  - selector: system_zone
+                    params:
+                         name: "VPN"
+                  - selector: system_interface
+                    params: {}
+
+
+- name: get route setting
+  fortios_configuration_fact:
+    selectors:
+      - selector: system_zone
+        #filters:
+          #- dst=@172.20.125.0
+          #- dst==172.20.125.0%200.0.0.0
+          #- device==port1
+  register: facts_result
+
+- name: display the results
+  debug:
+    var: facts_result
+
+- name: Initialize an empty list for our strings
+  set_fact:
+          list_vpn: []
+- name: Append string to list
+  set_fact:
+       list_vpn: "{{ list_vpn + item.interface | map(attribute='interface-name') | list }}"
+  loop: "{{ facts_result.meta[0]['results'] }}"
+- name: display interface zone
+  debug:
+      var: list_vpn
+- name: route setting
+  set_fact:
+      list_vpn: "{{ list_vpn+ [item.key] }}"
+  loop: '{{ vpn | dict2items }}'
+- name: display interfacee
+  debug:
+        var: list_vpn
+
+- name: create dict list variable
+  set_fact:
+          interface: "{{ interface|default([]) + [{'interface_name': item}] }}"
+  with_items:
+          - "{{ list_vpn }}"
+- name: print results
+  debug:
+      var: interface
+
+
+- name: zone allocation
+  fortios_system_zone:
+    #vdom: "root"
+    state: present
+    system_zone:
+      interface: "{{ interface }}"
+      #- interface_name: '{{item.key}}'
+      #loop: '{{ list_vpn | dict2items }}'
+      intrazone: deny
+      name: "VPN"
